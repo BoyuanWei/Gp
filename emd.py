@@ -1,10 +1,12 @@
 from PyEMD import EMD, EEMD
 import matplotlib.pyplot as plt
 import numpy as np
+from termcolor import *
 
 def normal(data, drawflag):
     data.shape = (len(data),)
     x = np.linspace(1, len(data), len(data))
+    print(colored("decomposing - normal emd mode...", 'green'))
     imfs = EMD().emd(data)
     if drawflag == 1:
         size = imfs.shape
@@ -24,6 +26,7 @@ def ee(data, drawflag):
     # Say we want detect extrema using parabolic method
     emd = eemd.EMD
     emd.extrema_detection = "parabol"
+    print(colored("decomposing - EEmd mode...", 'green'))
     imfs = eemd.eemd(data, x)
     if drawflag == 1:
         size = imfs.shape

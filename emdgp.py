@@ -27,7 +27,8 @@ xte = np.linspace(1, len(testset), len(testset))
 imfs = ee(trainset, 1)
 #trainset decomposed
 
-#
+#start the GP:
+
 
 
 
