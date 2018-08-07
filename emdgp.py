@@ -26,22 +26,23 @@ xtr = np.linspace(1, len(trainset), len(trainset))
 xte = np.linspace(1, len(testset), len(testset))
 imfs = ee(trainset, 1)
 #trainset decomposed
-
 nimfs = len(imfs) #see how manys imfs are got from the emd
 
 #reshape
 xtr.shape = (len(xtr), 1)
 #start the GP:
-
+m=[]
 GPy.plotting.change_plotting_library('matplotlib')
 
-kernel1 = GPy.kern.RBF(input_dim=1, variance=1., lengthscale=1.)
+kernel = GPy.kern.RBF(input_dim=1, variance=1., lengthscale=1.)
+
 for n in np.arange(nimfs):
     imf = imfs[n]
     imf.shape = (len(imf), 1)
-    m = GPy.models.GPRegression(xtr, imf, kernel1)
-    m.optimize(messages=True)
-    display(m)
-    fig = m.plot(plot_density=False)
+    kernel = GPy.kern.RBF(input_dim=1, variance=1., lengthscale=1.)
+    m.append(GPy.models.GPRegression(xtr, imf, kernel))
+    m[n].optimize(messages=True)
+    display(m[n])
+    fig = m[n].plot(plot_density=False, figsize=(14, 6), dpi=300)
     GPy.plotting.show(fig, filename='basic_gp_regression_density_notebook_optimized')
     plt.show()
